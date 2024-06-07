@@ -13,7 +13,10 @@
     "nuxt": "^2.15.8",
     "vue": "^2.7.10",
     "vue-server-renderer": "^2.7.10",
-    "vue-template-compiler": "^2.7.10"
+    "vue-template-compiler": "^2.7.10",
+    "dat.gui": "^0.7.9",
+    "gsap": "^3.12.5",
+    "three": "^0.164.1"
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^6.12.0",
