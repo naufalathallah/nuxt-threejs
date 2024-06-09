@@ -36,8 +36,7 @@ import gsap from "gsap";
 export default {
   async mounted() {
     if (process.client) {
-      // Dynamically import dat.gui and OrbitControls
-      const { GUI } = await import("dat.gui");
+      // Dynamically import OrbitControls
       const { OrbitControls } = await import(
         "three/examples/jsm/controls/OrbitControls"
       );
@@ -235,47 +234,50 @@ export default {
 
       animate();
 
-      // Add dat.GUI controls
-      const gui = new GUI();
-      const planeFolder = gui.addFolder("Plane");
-      planeFolder.add(plane.rotation, "x", 0, Math.PI * 2).name("Rotation X");
-      planeFolder.add(plane.rotation, "y", 0, Math.PI * 2).name("Rotation Y");
-      planeFolder.add(plane.rotation, "z", 0, Math.PI * 2).name("Rotation Z");
-      planeFolder
-        .add(world.plane, "width", 1, 500)
-        .name("Width")
-        .onChange(generatePlane);
-      planeFolder
-        .add(world.plane, "height", 1, 500)
-        .name("Height")
-        .onChange(generatePlane);
-      planeFolder
-        .add(world.plane, "widthSegments", 1, 100)
-        .name("Width Segments")
-        .onChange(generatePlane);
-      planeFolder
-        .add(world.plane, "heightSegments", 1, 100)
-        .name("Height Segments")
-        .onChange(generatePlane);
-      planeFolder.open();
+      if (process.env.NODE_ENV === "development") {
+        // Add dat.GUI controls only in development
+        const { GUI } = await import("dat.gui");
+        const gui = new GUI();
+        const planeFolder = gui.addFolder("Plane");
+        planeFolder.add(plane.rotation, "x", 0, Math.PI * 2).name("Rotation X");
+        planeFolder.add(plane.rotation, "y", 0, Math.PI * 2).name("Rotation Y");
+        planeFolder.add(plane.rotation, "z", 0, Math.PI * 2).name("Rotation Z");
+        planeFolder
+          .add(world.plane, "width", 1, 500)
+          .name("Width")
+          .onChange(generatePlane);
+        planeFolder
+          .add(world.plane, "height", 1, 500)
+          .name("Height")
+          .onChange(generatePlane);
+        planeFolder
+          .add(world.plane, "widthSegments", 1, 100)
+          .name("Width Segments")
+          .onChange(generatePlane);
+        planeFolder
+          .add(world.plane, "heightSegments", 1, 100)
+          .name("Height Segments")
+          .onChange(generatePlane);
+        planeFolder.open();
 
-      const lightFolder = gui.addFolder("Light");
-      lightFolder.add(light.position, "x", -10, 10).name("Light X");
-      lightFolder.add(light.position, "y", -10, 10).name("Light Y");
-      lightFolder.add(light.position, "z", -10, 10).name("Light Z");
-      lightFolder.open();
+        const lightFolder = gui.addFolder("Light");
+        lightFolder.add(light.position, "x", -10, 10).name("Light X");
+        lightFolder.add(light.position, "y", -10, 10).name("Light Y");
+        lightFolder.add(light.position, "z", -10, 10).name("Light Z");
+        lightFolder.open();
 
-      const backLightFolder = gui.addFolder("Back Light");
-      backLightFolder
-        .add(lightBack.position, "x", -10, 10)
-        .name("Back Light X");
-      backLightFolder
-        .add(lightBack.position, "y", -10, 10)
-        .name("Back Light Y");
-      backLightFolder
-        .add(lightBack.position, "z", -10, 10)
-        .name("Back Light Z");
-      backLightFolder.open();
+        const backLightFolder = gui.addFolder("Back Light");
+        backLightFolder
+          .add(lightBack.position, "x", -10, 10)
+          .name("Back Light X");
+        backLightFolder
+          .add(lightBack.position, "y", -10, 10)
+          .name("Back Light Y");
+        backLightFolder
+          .add(lightBack.position, "z", -10, 10)
+          .name("Back Light Z");
+        backLightFolder.open();
+      }
 
       window.addEventListener("mousemove", (event) => {
         mouse.x = (event.clientX / innerWidth) * 2 - 1;
