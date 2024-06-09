@@ -1,28 +1,31 @@
 <template>
-  <div
-    id="container"
-    class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-center antialiased max-w-2xl"
-  >
-    <h1
-      id="nama"
-      class="text-sm uppercase tracking-wide opacity-0 transform translate-y-8"
+  <div>
+    <canvas ref="canvas"></canvas>
+    <div
+      id="container"
+      class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-center antialiased max-w-2xl"
     >
-      Nopal Kaaahhhh
-    </h1>
-    <p
-      id="deskripsi"
-      class="text-4xl font-bold italic opacity-0 transform translate-y-8"
-    >
-      HEHE HEHE HEHE HEHE HEHE HEHE HEHE HEHE HEHE HEHE HEHE HEHE HEHE HEHE HEHE
-      HEHE HEHE HEHE HEHE HEHE HEHE HEHE HEHE
-    </p>
-    <a
-      id="aksi"
-      href="#"
-      class="border px-2 py-2 rounded-lg text-sm uppercase mt-8 inline-block hover:bg-white hover:text-gray-800 opacity-0 transform translate-y-8"
-    >
-      Lonjakan
-    </a>
+      <h1
+        id="nama"
+        class="text-sm uppercase tracking-wide opacity-0 transform translate-y-8"
+      >
+        Nopal Kaaahhhh
+      </h1>
+      <p
+        id="deskripsi"
+        class="text-4xl font-bold italic opacity-0 transform translate-y-8"
+      >
+        HEHE HEHE HEHE HEHE HEHE HEHE HEHE HEHE HEHE HEHE HEHE HEHE HEHE HEHE
+        HEHE HEHE HEHE HEHE HEHE HEHE HEHE HEHE HEHE
+      </p>
+      <a
+        id="aksi"
+        href="#"
+        class="border px-2 py-2 rounded-lg text-sm uppercase mt-8 inline-block hover:bg-white hover:text-gray-800 opacity-0 transform translate-y-8"
+      >
+        Lonjakan
+      </a>
+    </div>
   </div>
 </template>
 
@@ -67,10 +70,11 @@ export default {
       const raycaster = new THREE.Raycaster();
 
       // Create renderer
-      const renderer = new THREE.WebGLRenderer();
+      const renderer = new THREE.WebGLRenderer({
+        canvas: this.$refs.canvas,
+      });
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.setPixelRatio(window.devicePixelRatio);
-      document.body.appendChild(renderer.domElement);
 
       // Create a plane
       const materialPlane = new THREE.MeshPhongMaterial({
@@ -320,7 +324,7 @@ export default {
           duration: 1,
           delay: 1.5,
           onComplete: () => {
-            window.location = "http://localhost:3000/";
+            this.$router.push("/work");
           },
         });
       });
