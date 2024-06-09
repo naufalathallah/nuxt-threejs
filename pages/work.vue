@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-black h-screen px-6 py-12">
+  <div class="bg-black min-h-screen px-6 py-12">
     <h2
       class="text-white text-5xl font-bold italic opacity-0 mb-4"
       ref="title"
@@ -7,7 +7,7 @@
     >
       MY WORK
     </h2>
-    <div class="flex space-x-6">
+    <div class="flex flex-col space-y-6 md:flex-row md:space-x-6 md:space-y-0">
       <div
         v-for="(p, index) in projects"
         :key="index"
@@ -15,9 +15,15 @@
         ref="projects"
         :class="projectClass"
       >
-        <a :href="p.link" target="_blank">
-          <img :src="p.image.url" class="object-cover h-[70vh] w-full" alt="" />
-          <p class="text-white text-sm">{{ p.title }}</p>
+        <a :href="p.link" target="_blank" class="block overflow-hidden group">
+          <div class="relative overflow-hidden">
+            <img
+              :src="p.image.url"
+              class="object-cover h-[70vh] w-full transform scale-150 transition-transform duration-500 ease-in-out group-hover:scale-150"
+              alt=""
+            />
+          </div>
+          <p class="text-white text-sm mt-2">{{ p.title }}</p>
         </a>
       </div>
     </div>
@@ -59,7 +65,6 @@ export default {
       projectClass: "transform translate-x-8",
     };
   },
-
   mounted() {
     gsap.to(this.$refs.title, {
       opacity: 1,
@@ -85,3 +90,7 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+/* Custom Tailwind CSS classes can be added here if needed */
+</style>
