@@ -25,9 +25,9 @@
 </template>
 
 <script>
-import nscImg from "~/static/tb 1.png";
-import aleenaImg from "~/static/tb 2.png";
-import githubImg from "~/static/td 1.png";
+import nscImg from "~/static/1.png";
+import aleenaImg from "~/static/2.png";
+import githubImg from "~/static/3.png";
 import gsap from "gsap";
 export default {
   data() {
