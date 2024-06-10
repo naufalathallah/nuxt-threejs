@@ -102,7 +102,12 @@ export default {
       addStars();
 
       // Add circular line to represent the airplane orbiting the earth
-      const addOrbitingLine = () => {
+      const addOrbitingLine = (
+        rotationAxis1,
+        rotationAngle1,
+        rotationAxis2,
+        rotationAngle2
+      ) => {
         // Create a circular path
         const points = [];
         const radius = 1.2;
@@ -129,22 +134,42 @@ export default {
         });
 
         const tube = new THREE.Mesh(tubeGeometry, tubeMaterial);
-        scene.add(tube);
+        const quaternion1 = new THREE.Quaternion();
+        const quaternion2 = new THREE.Quaternion();
+        quaternion1.setFromAxisAngle(rotationAxis1, rotationAngle1);
+        quaternion2.setFromAxisAngle(rotationAxis2, rotationAngle2);
+        tube.applyQuaternion(quaternion1);
+        tube.applyQuaternion(quaternion2);
+        earth.add(tube); // Add the tube to the earth mesh
 
         const animateOrbit = () => {
           requestAnimationFrame(animateOrbit);
-          tube.rotation.y += 0.0005; // Rotate the entire tube to simulate orbiting
+          tube.rotation.y += 0.001; // Rotate the entire tube to simulate orbiting
         };
 
         animateOrbit();
       };
 
-      addOrbitingLine();
+      // Add first orbiting line
+      addOrbitingLine(
+        new THREE.Vector3(0, 1, 0),
+        0,
+        new THREE.Vector3(1, 0, 0),
+        Math.PI / 4
+      );
+
+      // Add second orbiting line at a 45-degree angle to the first one
+      addOrbitingLine(
+        new THREE.Vector3(0, 1, 0),
+        Math.PI / 2,
+        new THREE.Vector3(1, 0, 0),
+        -Math.PI / 4
+      );
 
       // Animation
       const animate = () => {
         requestAnimationFrame(animate);
-        earth.rotation.y += 0.001;
+        earth.rotation.y += 0.001; // Rotate the earth along with the orbiting lines
         if (stars) {
           stars.rotation.y += 0.0005;
         }
