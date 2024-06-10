@@ -34,6 +34,7 @@
 import nscImg from "~/static/1.png";
 import aleenaImg from "~/static/2.png";
 import githubImg from "~/static/3.png";
+import tb1 from "~/static/tb 1.png";
 import gsap from "gsap";
 export default {
   data() {
@@ -59,6 +60,13 @@ export default {
           },
           title: "Github",
           link: "https://github.com/naufalathallah",
+        },
+        {
+          image: {
+            url: tb1,
+          },
+          title: "Bikin Bumi",
+          link: "/earth",
         },
       ],
       titleClass: "transform translate-y-8",
